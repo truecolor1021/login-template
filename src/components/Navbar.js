@@ -60,7 +60,7 @@ function NavBar() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/signups"
+                    to="/signup"
                     onClick={() => updateExpanded(false)}
                   >
                     <AiOutlineUser style={{ marginBottom: "2px" }} /> Sign Up
