@@ -4,10 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import logo from "../Assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  AiOutlineLogin,
-  AiOutlineUser,
-} from "react-icons/ai";
+import { AiOutlineLogin, AiOutlineUser } from "react-icons/ai";
 import { signOut } from "../lib/api";
 function NavBar() {
   const [expand, updateExpanded] = useState(false);
@@ -63,7 +60,7 @@ function NavBar() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/signup"
+                    to="/signups"
                     onClick={() => updateExpanded(false)}
                   >
                     <AiOutlineUser style={{ marginBottom: "2px" }} /> Sign Up
