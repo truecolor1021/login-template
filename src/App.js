@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Preloader from "../src/components/Pre";
 import Navbar from "./components/Navbar";
-import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./Auth/SignUp/SignUp";
+import SignIn from "./Auth/SignIn/SignIn";
 import Footer from "./components/Footer";
 import {
   BrowserRouter as Router,
@@ -13,7 +14,6 @@ import ScrollToTop from "./components/ScrollToTop";
 import "./style.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SignUp from "./components/SignUp/SignUp";
 
 function App() {
   const [load, upadateLoad] = useState(true);

@@ -1,14 +1,13 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import ProjectForm from "./SignInForm";
-import Particle from "../Particle";
-
-export default function SignIn() {
+import ProjectForm from "./SignUpForm";
+import Particle from "../../components/Particle";
+export default function SignUp() {
   return (
     <Container fluid className="project-section">
       <Particle />
       <Container>
-        <Row style={{ justifyContent: "center", paddingBottom: "238px" }}>
+        <Row style={{ justifyContent: "center", paddingBottom: "114px" }}>
           <Col md={4} className="project-card">
             <ProjectForm
               isBlog={false}
