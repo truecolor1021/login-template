@@ -111,7 +111,7 @@ export default function SignUpForm(props) {
                 </Form.Control.Feedback>
               </InputGroup>
             </Form.Group>
-            {/* <Form.Group className="mt-3" controlId="validationCustomUsername">
+            <Form.Group className="mt-3" controlId="validationCustomUsername">
               <InputGroup hasValidation>
                 <InputGroup.Text id="inputGroupPrepend">
                   <BsFillKeyFill></BsFillKeyFill>
@@ -127,7 +127,7 @@ export default function SignUpForm(props) {
                   {errors?.password2}
                 </Form.Control.Feedback>
               </InputGroup>
-            </Form.Group> */}
+            </Form.Group>
           </Row>
 
           <Button onClick={handleSubmit} className="mb-3 mt-4">
