@@ -8,19 +8,43 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import { signIn, setAuthToken } from "../../lib/api";
 import { useNavigate } from "react-router-dom";
-
+import { useMutation, gql } from "@apollo/client";
+const LOGIN_USER = gql`
+  mutation login($input: LoginInput!) {
+    login(input: $input)
+  }
+`;
 export default function SignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const navigator = useNavigate();
-  const handleSubmit = () => {
-    signIn({ email, password })
-      .then((res) => {
-        setAuthToken(res.data);
+  const [loginUser] = useMutation(LOGIN_USER, {
+    onCompleted: (res) => {
+      if (res) {
+        setAuthToken(res.login); // Adjust this if the login response has a nested object
         navigator("/project");
-      })
-      .catch((err) => setErrors(err.response.data));
+      }
+    },
+    onError: (err) => {
+      setErrors(err.graphQLErrors[0]?.extensions?.exception?.errors || {});
+    },
+  });
+  const handleSubmit = () => {
+    let formErrors = {};
+
+    if (!email) {
+      formErrors.email = "Email is required";
+    }
+    if (!password) {
+      formErrors.password = "Password is required";
+    }
+
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+    } else {
+      loginUser({ variables: { input: { email, password } } });
+    }
   };
   return (
     <Card className="project-card-view">
@@ -71,7 +95,7 @@ export default function SignInForm() {
           </Row>
 
           <Button onClick={handleSubmit} className="mb-3 mt-4">
-            Sign IN
+            Sign In
           </Button>
         </Form>
 

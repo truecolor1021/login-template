@@ -7,9 +7,13 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import { SignUp, setAuthToken } from "../../lib/api";
 import { useNavigate } from "react-router-dom";
-
+import { useMutation, gql } from "@apollo/client";
+const REGISTER_USER = gql`
+  mutation Register($input: RegisterInput!) {
+    register(input: $input)
+  }
+`;
 export default function SignUpForm(props) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -17,7 +21,7 @@ export default function SignUpForm(props) {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [errors, setErrors] = useState([]);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const data = {
     firstName,
     lastName,
@@ -25,14 +29,19 @@ const navigate = useNavigate();
     password,
     password2,
   };
+  const [registerUser] = useMutation(REGISTER_USER, {
+    onCompleted: (res) => {
+      if (res.data) {
+        navigate("/");
+      }
+    },
+    onError: (err) => {
+      console.log(err.graphQLErrors[0]?.extensions?.exception?.errors || {});
+    },
+  });
 
   const handleSubmit = () => {
-    SignUp(data)
-      .then((res) => {
-        setAuthToken(res.data);
-        navigate("/");
-      })
-      .catch((err) => setErrors(err.response.data));
+    registerUser({ variables: { input: data } });
   };
   return (
     <Card className="project-card-view">
