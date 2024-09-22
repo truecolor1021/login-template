@@ -23,8 +23,22 @@ export const setAuthToken = (token) => {
     axios.defaults.headers.common["Authorization"] = token;
   }
 };
-export const SignUp = (data) => {
-  return axios.post(`${BACKEND_URL}/register`, data);
+export const SignUp = async (data) => {
+  try {
+    const response = await axios.post(`${BACKEND_URL}/graphql`, {
+      query: `
+        mutation Register($input: RegisterInput!) {
+          register(input: $input)
+        }
+      `,
+      variables: {
+        input: data,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data.errors || error.message;
+  }
 };
 export const signOut = (navigate) => {
   console.log("asdfasdf");
