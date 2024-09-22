@@ -28,7 +28,44 @@ function NavBar() {
       className={navColour ? "sticky" : "navbar"}
     >
       <Container>
-   
+        <Navbar.Toggle
+          aria-controls="responsive-navbar-nav"
+          onClick={() => {
+            updateExpanded(expand ? false : "expanded");
+          }}
+        ></Navbar.Toggle>
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto" defaultActiveKey="#home">
+            {token ? (
+              <Nav.Item>
+                <Nav.Link onClick={() => signOut(navigate)}>
+                  <AiOutlineLogin style={{ marginBottom: "2px" }} /> Sign Out
+                </Nav.Link>
+              </Nav.Item>
+            ) : (
+              <>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/signin"
+                    onClick={() => updateExpanded(false)}
+                  >
+                    <AiOutlineLogin style={{ marginBottom: "2px" }} /> Sign In
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/signup"
+                    onClick={() => updateExpanded(false)}
+                  >
+                    <AiOutlineUser style={{ marginBottom: "2px" }} /> Sign Up
+                  </Nav.Link>
+                </Nav.Item>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );
